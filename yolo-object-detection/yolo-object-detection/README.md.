@@ -1,14 +1,14 @@
 # Object Detection Practice Log — September 5, 2026
 
-Первый практический опыт с object detection и tracking: запуск готовой предобученной модели (YOLO, Ultralytics) на видео, и собственный Python-анализ того, что она выдала. Это не конспект теории (архитектуру YOLO, non-max suppression, метрики вроде mAP я не изучал) — это запись реального эксперимента: что запустил, что увидел, какие ограничения нашёл и как их обработал.
+First hands-on experience with object detection and tracking: running a pretrained model (YOLO, Ultralytics) on video, and my own Python analysis of what it produced. This is not a theory writeup (I have not studied YOLO's architecture, non-max suppression, or metrics like mAP) — it is a record of a real experiment: what I ran, what I saw, which limitations I found, and how I handled them.
 
-## 1. Постановка задачи
+## 1. Setup
 
-Скачал короткое видео с дорожным трафиком (Pixabay, ~1 минута, 1920x1080). Цель — не построить свою систему детекции, а посмотреть, как готовая модель ведёт себя на реальном видео, и покопаться в её ошибках.
+Downloaded a short traffic video (Pixabay, ~1 minute, 1920x1080). The goal was not to build a detection system, but to see how a pretrained model behaves on real video, and to dig into its mistakes.
 
-Инструменты: Python, библиотека `ultralytics` (готовая, предобученная модель YOLO), `opencv-python`.
+Tools: Python, the `ultralytics` library (pretrained YOLO model), `opencv-python`.
 
-## 2. Финальный скрипт
+## 2. Final script
 
 ```python
 from ultralytics import YOLO
@@ -28,52 +28,52 @@ for r in results:
 print(f"Unique tracked objects (confidence >= {CONF_THRESHOLD}): {len(unique_ids)}")
 ```
 
-`model.track()` — готовая функция библиотеки, делает и детекцию, и трекинг (присвоение ID объектам между кадрами) через алгоритм ByteTrack. Всё, что ниже (`CONF_THRESHOLD`, цикл, `set()`) — написано и добавлено самостоятельно, поверх готовой модели.
+`model.track()` is a ready-made library function that handles both detection and tracking (assigning IDs to objects across frames) using the ByteTrack algorithm. Everything below it (`CONF_THRESHOLD`, the loop, the `set()`) was written and added independently, on top of the pretrained model.
 
-## 3. Первый прогон — без фильтра
+## 3. First run, no filter
 
-Обработано 3000 кадров. Терминал построчно печатал, что видно на каждом кадре, например:
+3000 frames processed. The terminal printed per-frame detections line by line, for example:
 
 ```
 384x640 6 cars, 1 bus, 1 truck, 33.9ms
 ```
 
-Первая версия скрипта (без `CONF_THRESHOLD`) насчитала:
+The first version of the script (without `CONF_THRESHOLD`) reported:
 
 ```
 Unique vehicles tracked: 139
 ```
 
-Важная поправка задним числом: название переменной и вывода было неточным. Код собирает ID **всех** отслеженных объектов (машины, автобус, человек, мотоцикл — всё, что видит модель), а не только "vehicles". Разница между тем, что реально считает код, и тем, как я это назвал в выводе — сама по себе полезный урок: то, что метрика называется правильно, не менее важно, чем то, что она правильно считает.
+A correction worth noting: the variable and print statement name were imprecise. The code collects IDs for **all** tracked objects (cars, a bus, a person, a motorcycle, anything the model detects), not only "vehicles." The gap between what the code actually counts and how I labeled it is itself a useful lesson: a metric's name being accurate matters as much as the number being correct.
 
-## 4. Три найденные проблемы
+## 4. Three issues found
 
-### 4.1 Ложное срабатывание (false positive)
-Дорожный знак/камера на столбе была распознана как `bus`, но с **confidence 0.19** — модель сама почти не была уверена. Confidence score (от 0 до 1) — это то, насколько модель уверена в своей классификации; низкое значение — сигнал, что предсказанию стоит не доверять по умолчанию, а проверить.
+### 4.1 False positive
+A roadside sign/camera mounted on a pole was classified as a `bus`, but with **confidence 0.48** (in an earlier run, as low as 0.19) — the model itself was far from certain. Confidence score (0 to 1) reflects how sure the model is about a given prediction; a low value is a signal that the prediction deserves scrutiny, not blind trust.
 
-### 4.2 Нестабильность классификации (classification instability)
-Один и тот же фургон вдали был помечен как `truck`, а по мере приближения (больше визуальной информации в кадре) — как `car`. Один физический объект, разные предсказания на разных кадрах — известное ограничение детекции на видео, не единичный сбой.
+### 4.2 Classification instability
+The same van was tagged as `truck` from a distance, then as `car` once it got closer and more visual detail was available. One physical object, different predictions across frames. This is a known, documented limitation of detection on video, not an isolated glitch.
 
-### 4.3 Завышенный подсчёт (track fragmentation)
-Объекты иногда пропадали из трекинга на несколько кадров (перекрытие, дальность, смаз движения) и при повторном появлении получали новый ID — то есть одна и та же машина могла посчитаться дважды.
+### 4.3 Inflated count (track fragmentation)
+Objects occasionally disappeared from tracking for a few frames (occlusion, distance, motion blur) and were assigned a new ID upon reappearing, meaning the same vehicle could be counted more than once.
 
-Важное уточнение по терминологии, которое сам себе поправил: падение числа после фильтра (139 → 107) **не доказывает** конкретно ID switching (когда трекер путает два разных объекта между собой). Оно показывает, что часть учтённых ID была за счёт низкой уверенности детекции. Чтобы доказать именно ID switch, нужно проследить конкретный объект покадрово и убедиться, что новый ID действительно относится к тому же физическому объекту — этого я не делал, поэтому в итоговых выводах использована более осторожная формулировка: track fragmentation, а не ID switch.
+An important terminology correction I made to myself: the drop from 139 to 107 after filtering does **not** by itself prove ID switching (where the tracker confuses two different objects with each other). It shows that part of the counted IDs came from low-confidence detections. Proving an actual ID switch would require following a specific object frame by frame and confirming that a new ID really refers to the same physical object, which I did not do. For that reason, the more careful term used here is track fragmentation, not ID switch.
 
-## 5. Исправление
+## 5. Fix applied
 
-Добавлен `CONF_THRESHOLD = 0.5` — фильтр, отбрасывающий ID с низкой уверенностью до того, как они попадают в подсчёт.
+Added `CONF_THRESHOLD = 0.5`, a filter that discards low-confidence IDs before they are included in the count.
 
-Результат: **139 → 107**.
+Result: **139 -> 107**.
 
-Важно: сам видеовыход (рамки, подписи) не изменился — `model.track(save=True)` рисует видео независимо от последующего анализа, поэтому ложный `bus` всё ещё виден на видео. Фильтр повлиял только на то, как я анализировал результат, а не на то, что нарисовала модель. Это разделение — "сырой вывод модели" vs "мой анализ поверх него" — стало главным выводом всего эксперимента.
+Important: the video output itself (boxes, labels) did not change. `model.track(save=True)` renders the video independently of any later analysis, so the false `bus` detection is still visible in the video. The filter only affected how I analyzed the results, not what the model drew. This distinction, raw model output versus my analysis on top of it, was the main takeaway of the whole experiment.
 
-## 6. Термины, разобранные на практике
+## 6. Terms clarified through practice
 
-- **Confidence score** — уверенность модели в конкретном предсказании (0-1)
-- **Classification instability** — один объект, разные предсказанные классы на разных кадрах
-- **Track fragmentation** — потеря и повторное создание ID для одного и того же объекта (в отличие от ID switch, где ID путается между двумя разными объектами)
-- **IoU (Intersection over Union)** — упомянуто как следующий шаг: метрика пересечения двух рамок, понадобится для программного сравнения predicted vs ground truth в следующей практике
+- **Confidence score**: the model's certainty in a specific prediction (0 to 1)
+- **Classification instability**: one object, different predicted classes across frames
+- **Track fragmentation**: an object's ID is lost and a new one created for the same object (as opposed to ID switch, where the ID is confused between two different objects)
+- **IoU (Intersection over Union)**: noted as a next step, the metric needed to programmatically compare predicted boxes against ground truth
 
-## 7. Следующий шаг
+## 7. Next step
 
-Взять несколько конкретных кадров с ошибками этого видео (ложный `bus`, флип truck/car), вручную разметить правильный вариант в CVAT, сравнить predicted vs ground truth напрямую.
+Take a few specific frames with errors from this video (the false `bus`, the truck/car flip), manually annotate the correct label in CVAT, and compare predicted output against ground truth directly.
