@@ -1,4 +1,4 @@
-# Object Detection Practice Log — September 5, 2026
+# Object Detection Practice Log — September 7, 2026
 
 First hands-on experience with object detection and tracking: running a pretrained model (YOLO, Ultralytics) on video, and my own Python analysis of what it produced. This is not a theory writeup (I have not studied YOLO's architecture, non-max suppression, or metrics like mAP) — it is a record of a real experiment: what I ran, what I saw, which limitations I found, and how I handled them.
 
