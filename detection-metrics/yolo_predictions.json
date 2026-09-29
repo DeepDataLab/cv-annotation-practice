@@ -1,0 +1,358 @@
+{
+  "frame_1.jpg": [
+    {
+      "class": "person",
+      "confidence": 0.885,
+      "bbox": [
+        435.7,
+        240.7,
+        618.3,
+        874.4
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.883,
+      "bbox": [
+        877.3,
+        103.7,
+        1201.4,
+        1075.2
+      ]
+    },
+    {
+      "class": "car",
+      "confidence": 0.882,
+      "bbox": [
+        0.0,
+        402.9,
+        314.4,
+        659.0
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.881,
+      "bbox": [
+        1676.7,
+        263.4,
+        1880.1,
+        851.7
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.783,
+      "bbox": [
+        1493.2,
+        324.8,
+        1660.2,
+        814.5
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.782,
+      "bbox": [
+        679.5,
+        209.8,
+        927.8,
+        891.2
+      ]
+    },
+    {
+      "class": "suitcase",
+      "confidence": 0.733,
+      "bbox": [
+        602.8,
+        518.9,
+        730.4,
+        889.9
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.653,
+      "bbox": [
+        1254.3,
+        526.8,
+        1448.3,
+        778.0
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.577,
+      "bbox": [
+        613.2,
+        256.8,
+        762.6,
+        750.9
+      ]
+    },
+    {
+      "class": "traffic light",
+      "confidence": 0.433,
+      "bbox": [
+        1776.9,
+        195.4,
+        1868.4,
+        299.2
+      ]
+    },
+    {
+      "class": "suitcase",
+      "confidence": 0.342,
+      "bbox": [
+        606.2,
+        668.7,
+        730.8,
+        887.9
+      ]
+    },
+    {
+      "class": "handbag",
+      "confidence": 0.279,
+      "bbox": [
+        843.7,
+        476.3,
+        954.5,
+        733.2
+      ]
+    },
+    {
+      "class": "stop sign",
+      "confidence": 0.251,
+      "bbox": [
+        300.8,
+        346.9,
+        332.4,
+        389.6
+      ]
+    }
+  ],
+  "frame_2.jpg": [
+    {
+      "class": "person",
+      "confidence": 0.877,
+      "bbox": [
+        673.0,
+        5.5,
+        1058.7,
+        1072.4
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.861,
+      "bbox": [
+        1683.5,
+        267.4,
+        1847.9,
+        845.6
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.86,
+      "bbox": [
+        142.0,
+        140.9,
+        472.5,
+        1022.5
+      ]
+    },
+    {
+      "class": "car",
+      "confidence": 0.815,
+      "bbox": [
+        0.2,
+        400.3,
+        255.5,
+        659.6
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.704,
+      "bbox": [
+        1488.9,
+        323.3,
+        1649.3,
+        813.1
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.674,
+      "bbox": [
+        1240.4,
+        527.6,
+        1437.4,
+        783.9
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.635,
+      "bbox": [
+        506.1,
+        147.1,
+        770.1,
+        1055.5
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.592,
+      "bbox": [
+        1816.0,
+        0.0,
+        1919.3,
+        1080.0
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.527,
+      "bbox": [
+        1165.8,
+        457.1,
+        1219.1,
+        566.3
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.334,
+      "bbox": [
+        420.1,
+        224.1,
+        608.9,
+        1022.5
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.315,
+      "bbox": [
+        936.8,
+        462.6,
+        1134.7,
+        835.7
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.296,
+      "bbox": [
+        433.2,
+        187.4,
+        731.7,
+        1039.8
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.288,
+      "bbox": [
+        1838.4,
+        216.9,
+        1919.5,
+        1072.2
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.266,
+      "bbox": [
+        439.9,
+        242.7,
+        598.6,
+        581.1
+      ]
+    },
+    {
+      "class": "backpack",
+      "confidence": 0.262,
+      "bbox": [
+        1823.0,
+        226.0,
+        1920.0,
+        545.8
+      ]
+    }
+  ],
+  "frame_3.jpg": [
+    {
+      "class": "person",
+      "confidence": 0.866,
+      "bbox": [
+        5.5,
+        0.0,
+        421.8,
+        1073.6
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.865,
+      "bbox": [
+        352.2,
+        2.5,
+        852.8,
+        1070.1
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.683,
+      "bbox": [
+        791.2,
+        179.2,
+        959.4,
+        931.8
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.541,
+      "bbox": [
+        869.4,
+        7.5,
+        1771.5,
+        1058.5
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.506,
+      "bbox": [
+        905.3,
+        228.0,
+        1092.4,
+        909.6
+      ]
+    },
+    {
+      "class": "traffic light",
+      "confidence": 0.499,
+      "bbox": [
+        1774.5,
+        193.8,
+        1854.7,
+        308.9
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.436,
+      "bbox": [
+        1733.2,
+        323.9,
+        1832.8,
+        849.6
+      ]
+    }
+  ]
+}
