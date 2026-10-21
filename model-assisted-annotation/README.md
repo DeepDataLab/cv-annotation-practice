@@ -15,6 +15,7 @@ with everything stored in SQLite and compared with SQL.
 5. `make_audit_tasks.py`: picks 8 random frames (seed 42) for an independent from-scratch pass
 6. `compare_audit.py`, `analyze_extras.py`, `check_confident.py`: compare model, review and from-scratch labels
 7. `make_video.py`: demo video with boxes colored by confidence
+8. `export_data.py`, `index.html`: static page for the live demo (data exported from the database)
 
 ## Results
 
