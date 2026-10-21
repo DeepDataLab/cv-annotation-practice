@@ -1,5 +1,7 @@
 # Model-assisted annotation: what changes when a human reviews pre-labels
 
+Live demo: https://huggingface.co/spaces/DeepDataLab/prelabel-confidence-explorer
+
 A small experiment on one night street video (Bangkok traffic, Pixabay Content License):
 YOLOv8n pre-labels, human review in Label Studio, and an independent from-scratch audit,
 with everything stored in SQLite and compared with SQL.
